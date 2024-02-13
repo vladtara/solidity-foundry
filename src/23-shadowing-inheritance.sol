@@ -7,9 +7,9 @@ pragma solidity ^0.8.20;
 contract A {
     string public name = "Contract A";
 
-    function getName() public view returns(string memory) {
+    function getName() public view returns (string memory) {
         return name;
-    } 
+    }
 }
 
 // Shadowing is disallowed in Solidity 0.6

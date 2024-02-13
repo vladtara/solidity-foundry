@@ -6,7 +6,7 @@ pragma solidity ^0.8.20;
 // assert is used to check for code that should never be false. Failing assertion probably means that there is a bug.
 
 contract Error {
-    function testRequire(uint number) public pure {
+    function testRequire(uint256 number) public pure {
         // Require should be used to validate conditions such as:
         // - inputs
         // - conditions before execution
@@ -15,15 +15,15 @@ contract Error {
         number;
     }
 
-    function testRevert(uint number) public pure {
+    function testRevert(uint256 number) public pure {
         // Revert is useful when the condition to check is complex.
         // This code does the exact same thing as the example above
-        if(number <= 10) {
+        if (number <= 10) {
             revert("Input must be less than 10");
         }
     }
 
-    uint public num;
+    uint256 public num;
 
     function testAsesert() public view {
         // Assert should only be used to test for internal errors,
@@ -34,25 +34,25 @@ contract Error {
         assert(num == 1);
     }
 
-
     // Custom error
-    error BadBalance(uint bal, uint amount);
-    function testCustomError(uint _amount) public view {
-        uint _bal = address(this).balance;
-        if(_bal < _amount) {
+    error BadBalance(uint256 bal, uint256 amount);
+
+    function testCustomError(uint256 _amount) public view {
+        uint256 _bal = address(this).balance;
+        if (_bal < _amount) {
             //revert BadBalance({bal: _bal, amount: _amount});
             revert BadBalance(_bal, _amount);
-        } 
+        }
     }
 }
 
 contract Account {
-    uint public balance;
-    uint public constant MAX_UINT = 2 ** 256 - 1;
-    
-    function deposit(uint _amount) public {
-        uint oldBalance = balance;
-        uint newBalance = balance + _amount;
+    uint256 public balance;
+    uint256 public constant MAX_UINT = 2 ** 256 - 1;
+
+    function deposit(uint256 _amount) public {
+        uint256 oldBalance = balance;
+        uint256 newBalance = balance + _amount;
         // balance + _amount does not overflow if balance + _amount >= balance
         require(newBalance >= oldBalance);
 
@@ -61,11 +61,11 @@ contract Account {
         assert(balance >= oldBalance);
     }
 
-    function withdraw(uint _amount) public {
-        uint oldBalance = balance;
+    function withdraw(uint256 _amount) public {
+        uint256 oldBalance = balance;
         require(balance >= _amount, "Underflow");
 
-        if(balance >= _amount) {
+        if (balance >= _amount) {
             revert("Underflow");
         }
 

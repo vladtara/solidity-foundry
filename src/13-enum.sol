@@ -5,7 +5,6 @@ pragma solidity ^0.8.20;
 // Enums can be declared outside of a contract.
 
 contract Enum {
-
     // Enum representing shipping status
     enum Status {
         Pending,
@@ -24,25 +23,25 @@ contract Enum {
     // Accepted - 2
     // Rejected - 3
     // Canceled - 4
+
     function get() public view returns (Status) {
         return status;
     }
 
-	// Update status by passing uint into input
-	function set(Status _item) public {
-    	status = _item;
-    
-	}
+    // Update status by passing uint into input
+    function set(Status _item) public {
+        status = _item;
+    }
 
-	// You can update to a specific enum like this
-	function cancel() public {
-		status = Status.Canceled;
-	}
+    // You can update to a specific enum like this
+    function cancel() public {
+        status = Status.Canceled;
+    }
 
-	// delete resets the enum to its first value, 0
-	function reset() public {
-		delete status;
-	}
+    // delete resets the enum to its first value, 0
+    function reset() public {
+        delete status;
+    }
 }
 
 //Declaring and importing Enum

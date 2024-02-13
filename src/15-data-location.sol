@@ -7,29 +7,24 @@ pragma solidity ^0.8.20;
 // calldata - special data location that contains function arguments
 
 contract DataLocations {
-
-    uint[] public arr;
-    mapping(uint => address) public map;
+    uint256[] public arr;
+    mapping(uint256 => address) public map;
 
     struct MyStruct {
-        uint foo;
-
+        uint256 foo;
     }
 
-    mapping(uint => MyStruct) public myStructs;
+    mapping(uint256 => MyStruct) public myStructs;
 
-
-    function _f(
-        uint[] storage _arr,
-        mapping(uint => address) storage _map,
-        MyStruct storage _myStruct
-    ) internal {
+    function _f(uint256[] storage _arr, mapping(uint256 => address) storage _map, MyStruct storage _myStruct)
+        internal
+    {
         _arr.push(1);
         _map[1] = msg.sender;
         _myStruct.foo = 33;
     }
 
-    function f() public returns (uint, MyStruct memory) {
+    function f() public returns (uint256, MyStruct memory) {
         // call _f with state variables
         _f(arr, map, myStructs[1]);
 
@@ -39,27 +34,27 @@ contract DataLocations {
         // create a struct in memory
         MyStruct memory myMemStrunct = MyStruct(0);
         myMemStrunct.foo = 2;
-        
+
         // return data
-        return (myStruct.foo,myMemStrunct);
+        return (myStruct.foo, myMemStrunct);
     }
 
     // You can return memory variables
-    function g(uint[] memory _arr) public pure returns(uint[] memory) {
-        uint first = _arr[0];
-        uint len = _arr.length;
-        uint last = _arr[len-1];
-        uint[] memory res = new uint[](3);
+    function g(uint256[] memory _arr) public pure returns (uint256[] memory) {
+        uint256 first = _arr[0];
+        uint256 len = _arr.length;
+        uint256 last = _arr[len - 1];
+        uint256[] memory res = new uint256[](3);
         res[0] = first;
         res[1] = last;
         res[2] = len;
         return res;
     }
 
-    // Use calldata 
-    function h(uint[] calldata _arr) external view returns(uint, address) {
-        uint res;
-        for(uint i; i <= (_arr.length - 1); i++) {
+    // Use calldata
+    function h(uint256[] calldata _arr) external view returns (uint256, address) {
+        uint256 res;
+        for (uint256 i; i <= (_arr.length - 1); i++) {
             res += _arr[i];
         }
         return (res, msg.sender);

@@ -11,7 +11,7 @@ contract FuncModifier {
     // We will use these variables to demonstrate how to use
     // modifiers.
     address public owner;
-    uint public x = 10;
+    uint256 public x = 10;
     bool public locked;
 
     constructor() {
@@ -37,7 +37,7 @@ contract FuncModifier {
         _;
     }
 
-    function changeOwner(address _newOwner) public onlyOwner() validAdrress(_newOwner) {
+    function changeOwner(address _newOwner) public onlyOwner validAdrress(_newOwner) {
         owner = _newOwner;
     }
 
@@ -45,15 +45,15 @@ contract FuncModifier {
     // This modifier prevents a function from being called while
     // it is still executing.
     modifier noReentrancy() {
-        require(!locked,"No reentrancy!");
+        require(!locked, "No reentrancy!");
         locked = true;
         _;
         locked = false;
     }
 
-    function decrement(uint _item) public noReentrancy() {
+    function decrement(uint256 _item) public noReentrancy {
         x -= _item;
-        if(_item > 1) {
+        if (_item > 1) {
             decrement(_item - 1);
         }
     }

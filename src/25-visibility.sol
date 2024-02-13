@@ -9,7 +9,6 @@ pragma solidity ^0.8.20;
 // internal- only inside contract that inherits an internal function
 // external - only other contracts and accounts can call
 
-
 contract Base {
     // State variables
     string private privateVar = "Private Variable";
@@ -18,27 +17,25 @@ contract Base {
     // State variables cannot be external so this code won't compile.
     // string external externalVar = "my external variable";
 
-
     // Private function can only be called
     // - inside this contract
     // Contracts that inherit this contract cannot call this function.
-    function privatFunc() private pure returns(string memory) {
+    function privatFunc() private pure returns (string memory) {
         return "Private func";
     }
 
-    function testPrivatFunc() public pure returns(string memory) {
+    function testPrivatFunc() public pure returns (string memory) {
         return privatFunc();
     }
 
-
     // Internal function can be called
     // - inside this contract
-    // - inside contracts that inherit this contract  
-    function internalFunc() internal pure returns(string memory) {
+    // - inside contracts that inherit this contract
+    function internalFunc() internal pure returns (string memory) {
         return "Internal func";
     }
 
-    function testInternalFunc()public pure virtual returns(string memory) {
+    function testInternalFunc() public pure virtual returns (string memory) {
         return internalFunc();
     }
 
@@ -46,13 +43,13 @@ contract Base {
     // - inside this contract
     // - inside contracts that inherit this contract
     // - by other contracts and accounts
-    function publicFunc() public pure returns(string memory) {
+    function publicFunc() public pure returns (string memory) {
         return "Public func";
     }
 
     // External functions can only be called
     // - by other contracts and accounts
-    function externalFunk() external pure returns(string memory) {
+    function externalFunk() external pure returns (string memory) {
         return "External func";
     }
     // This function will not compile since we're trying to call
@@ -60,7 +57,6 @@ contract Base {
     // function testExternalFunc() public pure returns (string memory) {
     //     return externalFunc();
     // }
-
 }
 
 contract Child is Base {
@@ -71,11 +67,11 @@ contract Child is Base {
     // }
 
     // Internal function call be called inside child contracts.
-    function testInternalFunc() public pure override returns(string memory) {
+    function testInternalFunc() public pure override returns (string memory) {
         return internalFunc();
     }
 
-    function getPrivateVar() public view returns(string memory) {
+    function getPrivateVar() public view returns (string memory) {
         return internalVar;
     }
 }

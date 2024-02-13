@@ -14,7 +14,7 @@ contract Event {
     event LogTest();
 
     function test(string calldata _text) public {
-        emit Log(msg.sender,"test");
+        emit Log(msg.sender, "test");
         emit Log({sender: msg.sender, message: _text});
         emit LogTest();
     }
