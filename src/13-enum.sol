@@ -38,7 +38,7 @@ contract Enum {
         status = Status.Canceled;
     }
 
-    // delete resets the enum to its first value, 0
+    // Delete resets the enum to its first value, 0
     function reset() public {
         delete status;
     }
