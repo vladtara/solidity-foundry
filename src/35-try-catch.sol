@@ -43,13 +43,16 @@ contract Bar {
     // tryCatchNewContract(0x0000000000000000000000000000000000000000) => Log("invalid address")
     // tryCatchNewContract(0x0000000000000000000000000000000000000001) => LogBytes("")
     // tryCatchNewContract(0x0000000000000000000000000000000000000002) => Log("Foo created")
-
     function tryCatchNewContract(address _owner) public {
-        try (new Foo)(_owner) returns (Foo foo) {
-            emit Log("Foo foo");
+        try (new Foo)(_owner) {
+            // you can use variable foo here
+            foo.myFunc(1);
+            emit Log("Foo created");
         } catch Error(string memory res) {
+            // catch failing revert() and require()
             emit Log(res);
         } catch (bytes memory res) {
+            // catch failing assert()
             emit LogBytes(res);
         }
     }
