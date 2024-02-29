@@ -95,9 +95,10 @@ contract VerifySignature {
 
     function recoverSignature(
         bytes32 _ethSignedMessageHash,
-        bytes memory _signature
+        bytes calldata _signature
     ) public pure returns(address) {
         require(_signature.length == 65, "Invalid signature Length");
+        bytes memory signature = _signature;
         bytes32 r;
         bytes32 s;
         uint8 v;
@@ -111,12 +112,18 @@ contract VerifySignature {
             mload(p) loads next 32 bytes starting at the memory address p into memory
             */
             // first 32 bytes, after the length prefix
-            r := mload(add(_signature, 32))
+            r := mload(add(signature, 32))
             // second 32 bytes
-            s := mload(add(_signature, 64))
+            s := mload(add(signature, 64))
             // final byte (first byte of the next 32 bytes)
-            v := byte(0, mload(add(_signature, 96))) 
+            v := byte(0, mload(add(signature, 96))) 
         }
+        // assembly {
+        //     // Copy the signature from calldata to memory
+        //     r := calldataload(add(_signature.offset, 32))
+        //     s := calldataload(add(_signature.offset, 64))
+        //     v := byte(0, calldataload(add(_signature.offset, 96)))
+        // }
 
         return ecrecover(_ethSignedMessageHash, v, r, s);  
     }
