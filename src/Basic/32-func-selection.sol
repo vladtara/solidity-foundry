@@ -12,7 +12,6 @@ Perhaps you can save a tiny amount of gas if you precompute and inline the funct
 Here is how the function selector is computed.
 */
 
-
 contract FuncSelector {
     /*
     "transfer(address,uint256)"
@@ -25,7 +24,9 @@ contract FuncSelector {
         return bytes4(keccak256(bytes(_func)));
     }
 
-    function getSelector2(string calldata _func) external pure returns(bytes memory) {
+    function getSelector2(
+        string calldata _func
+    ) external pure returns (bytes memory) {
         return abi.encodeWithSignature(_func);
     }
 }
